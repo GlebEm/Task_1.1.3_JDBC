@@ -5,12 +5,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Table
-public class User {
+public class User { // Все поля должны быть private
     @Id
     private Long id;
 
     @Column
     private String name;
+
 
     @Column
     private String lastName;
@@ -59,4 +60,15 @@ public class User {
     public void setAge(Byte age) {
         this.age = age;
     }
+
+    @Override /// Получение всех User из базы и вывод в консоль ( должен быть переопределен toString в классе User)
+    public String toString() { //через гетеры
+        return "User{" +
+                "id=" + getId() +
+                ", name='" + getName() + '\'' +
+                ", lastName='" + getLastName() + '\'' +
+                ", age=" + getAge() +
+                '}';
+    }
+
 }
