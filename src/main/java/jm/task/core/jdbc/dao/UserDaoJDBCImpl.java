@@ -11,7 +11,7 @@ import java.util.List;
  * Обработка всех исключений, связанных с работой с базой данных должна находиться в dao
  */
 public class UserDaoJDBCImpl implements UserDao { // Классы dao/service должны реализовывать соответствующие интерфейсы
-    public static final Connection connection = Util.getConnection();
+//    public static final Connection connection = Util.getConnection();
 
     public UserDaoJDBCImpl() { // Класс dao должен иметь конструктор пустой/по умолчанию
 
@@ -30,7 +30,8 @@ public class UserDaoJDBCImpl implements UserDao { // Классы dao/service должны р
                 age INT  
                 ); 
                 """; //создаем ЕСЛИ не существует
-        try (Statement statement = connection.createStatement()) {
+        try (Connection connection = Util.getConnection();
+                Statement statement = connection.createStatement()) {
             //Connection connection1 = DriverManager.getConnection("db.url", "db.username", "db.password")) {
             // Statement statement = connection1.createStatement();
             statement.executeUpdate(sql);
@@ -42,7 +43,8 @@ public class UserDaoJDBCImpl implements UserDao { // Классы dao/service должны р
 
     //Удаление таблицы User(ов) – не должно приводить к исключению, если таблицы не существует
     public void dropUsersTable() {
-        try (Statement statement = connection.createStatement()) {
+        try (Connection connection = Util.getConnection();
+                Statement statement = connection.createStatement()) {
             statement.executeUpdate("DROP TABLE IF EXISTS users"); //удаляем ЕСЛИ существует
         } catch (SQLException e) {
             e.printStackTrace();
@@ -55,7 +57,8 @@ public class UserDaoJDBCImpl implements UserDao { // Классы dao/service должны р
 
         //prepared Statement позволяется защититься от SQL-инъекций и осуществить подстановку значений
         String sql = "INSERT INTO users (first_name, last_name, age) VALUES (?,?,?)";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        try (Connection connection = Util.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, lastName);
             preparedStatement.setByte(3, age);
@@ -70,7 +73,8 @@ public class UserDaoJDBCImpl implements UserDao { // Классы dao/service должны р
 
     public void removeUserById(long id) {
         String sql = " DELETE FROM users WHERE id=?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        try (Connection connection = Util.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -81,7 +85,8 @@ public class UserDaoJDBCImpl implements UserDao { // Классы dao/service должны р
 
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();  // service переиспользует методы dao
-        try (Statement statement = connection.createStatement()) { // создаю объект Statement чтобы выполнить команду
+        try (Connection connection = Util.getConnection();
+                Statement statement = connection.createStatement()) { // создаю объект Statement чтобы выполнить команду
             ResultSet resultSet = statement.executeQuery("SELECT * FROM users");// получение данных с помощью команды SELECT
             //Метод executeQuery используется в запросах, результатом которых является один единственный набор значений, таких как запросов типа SELECT.
             //Метод возвращает объект ResultSet, который содержит все полученные данные.
@@ -102,7 +107,8 @@ public class UserDaoJDBCImpl implements UserDao { // Классы dao/service должны р
 
     public void cleanUsersTable() {
         String sql = "TRUNCATE TABLE users";  //TRUNCATE — empty a table or set of tables
-        try (Statement statement = connection.createStatement()) {
+        try (Connection connection = Util.getConnection();
+                Statement statement = connection.createStatement()) {
             statement.executeUpdate(sql);
         } catch (SQLException e) {
             throw new RuntimeException(e);
