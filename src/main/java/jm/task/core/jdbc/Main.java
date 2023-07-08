@@ -22,33 +22,26 @@ public class Main {
     private final static UserService userService = new UserServiceImpl();
 
     public static void main(String[] args) throws SQLException {
-//        Class<Driver>driverClass = Driver.class;
-//        String url = "jdbc:postgresql://localhost:5432/webapp";
-//        String password = "postgres";
-//        String username = "postgres";
-//        try(var connection= Util.open()){
-//           System.out.println(connection.getTransactionIsolation());
-//       }
-
-        // реализуйте алгоритм здесь
-
-        userService.createUsersTable(); //Создание таблицы User(ов)
 
 
-//После каждого добавления должен быть вывод в консоль ( User с именем – name добавлен в базу данных )
+
+        userService.createUsersTable();
+
+
+
 
         userService.saveUser("Патрик", "Бэйтман", (byte) 27);
         userService.saveUser("Майкл", "Бьюри", (byte) 31);
         userService.saveUser("Брюс", "Уэйн", (byte) 34);
         userService.saveUser("Тревор", "Резник", (byte) 41);
 
-        //Получение всех User из базы и вывод в консоль ( должен быть переопределен toString в классе User)
+
 
         userService.getAllUsers();
 
         userService.removeUserById(3);
-        userService.cleanUsersTable(); //Очистка таблицы User(ов)
-        userService.dropUsersTable(); //Удаление таблицы
+        userService.cleanUsersTable();
+        userService.dropUsersTable();
 
     }
 }

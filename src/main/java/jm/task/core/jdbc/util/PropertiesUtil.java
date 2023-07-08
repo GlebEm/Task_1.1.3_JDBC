@@ -8,13 +8,13 @@ public class PropertiesUtil {
     private static final Properties PROPERTIES = new Properties();
 
     static {
-        loadProperties();  //загрузили файлы в файл пропертис
+        loadProperties();
     }
 
-    private static void loadProperties() {  //загружаем в проперти файл
+    private static void loadProperties() {
         try (InputStream inputStream = PropertiesUtil.class.getClassLoader().getResourceAsStream("application.properties")) {  //
-            //закрываем поток в ресурсах трая
-            PROPERTIES.load(inputStream); //загружаем в пропертис файл input stream
+
+            PROPERTIES.load(inputStream);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

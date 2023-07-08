@@ -5,7 +5,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Table
-public class User { // ¬се пол€ должны быть private
+public class User {
     @Id
     private Long id;
 
@@ -61,8 +61,8 @@ public class User { // ¬се пол€ должны быть private
         this.age = age;
     }
 
-    @Override /// ѕолучение всех User из базы и вывод в консоль ( должен быть переопределен toString в классе User)
-    public String toString() { //через гетеры
+    @Override
+    public String toString() {
         return "User{" +
                 "id=" + getId() +
                 ", name='" + getName() + '\'' +
