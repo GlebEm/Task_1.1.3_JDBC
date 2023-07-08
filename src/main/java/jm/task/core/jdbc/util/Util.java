@@ -14,11 +14,6 @@ public class Util {
     private static final String USERNAME_KEY = "db.username";
     private static final String PASSWORD_KEY = "db.password";
 
-//    db.url=jdbc:postgresql://localhost:5432/postgres
-//    db.username=postgres
-//    db.password=postgres
-
-
     public static Connection getConnection() {
         Connection connection = null;
         try {
@@ -32,6 +27,5 @@ public class Util {
             System.out.println("Ошибка на этапе подключения");
             throw new RuntimeException(e);
         }
- //       return connection;
     }
 }
